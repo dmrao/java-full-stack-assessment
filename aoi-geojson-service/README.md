@@ -76,9 +76,10 @@ Username: admin
 Password: admin
 ```
 **Create Realm : Geocento**
-
+```
 In the Keycloak Admin Console, click on the dropdown in the top-left corner and select "Add realm".
 Add name : ** Geocento ** and click "Create".
+```
 
 **Create a Client: aoi-ui**
 ```
@@ -107,7 +108,8 @@ Note the **Client Secret** value.
 ```
 
 3. Build and Run the Spring Boot Application
-3.1 Update the **Client Secret** in index.html ( const CLIENT_SECRET = "<YOUR SECRET>"; and application.properties (spring.security.oauth2.client.registration.keycloak.client-secret=<YOUR SECRET) files
+   
+3.1. Update the **Client Secret** in index.html ( const CLIENT_SECRET = "<YOUR SECRET>"; and application.properties (spring.security.oauth2.client.registration.keycloak.client-secret=<YOUR SECRET) files
 
 3.2. Build the Project
 Use Maven to build the project. This will compile the source code, run tests, and package the application.
