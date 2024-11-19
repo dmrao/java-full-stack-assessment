@@ -32,7 +32,7 @@ Interactive API documentation available at /swagger-ui.html.
 - Spring Security
 
 # Prerequisites
-- JDK 17 or later
+- JDK 17
 - Maven
 - Docker & Docker Compose
 
