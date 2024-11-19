@@ -1,6 +1,6 @@
 # java-full-stack-assessment
 Assessment exercise for the full stack Java developer position
-
+ 
 ## GOAL
 
 Write a secured service exposing a REST API with one end-point defined as follows
