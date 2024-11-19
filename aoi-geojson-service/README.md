@@ -1,27 +1,27 @@
 
-#Project Overview
+# Project Overview
 This project is a Spring Boot application that processes GeoJSON Areas of Interest (AoI) and generates footprints for the specified AoI. It includes an interactive map using Leaflet.js and provides a secure REST API, protected by Keycloak for OAuth-based authentication.
 
-#Features
-##REST API:
+# Features
 
+## REST API:
 Processes GeoJSON input for AoI and returns generated footprints.
 Includes Swagger documentation for API exploration.
 
-##Map-based Client using Leaflet.js:
--Displays the AoI and generated footprints on an interactive map using Leaflet.js.
+## Map-based Client using Leaflet.js:
+- Displays the AoI and generated footprints on an interactive map using Leaflet.js.
 - Has a login page where you enter the username and password configured in keyCloak
 -Can be accessed using the base url : http://<host:port>/ ( eg: http://localhost:8080/ if tomcat is on 8080)
 
-##Security:
+## Security:
 
 Secured using Keycloak with OAuth2.0 and Bearer Tokens.
 
-##Swagger UI:
+## Swagger UI:
 
 Interactive API documentation available at /swagger-ui.html.
 
-#Technologies Used
+# Technologies Used
 -Java 17
 -Spring Boot 3.3.5
 -Maven
@@ -31,12 +31,12 @@ Interactive API documentation available at /swagger-ui.html.
 -Swagger (API Documentation)
 -Spring Security
 
-#Prerequisites
+# Prerequisites
 -JDK 17 or later
 -Maven
 -Docker & Docker Compose
 
-#Project Setup
+# Project Setup
 1. Clone the Repository
 Block:
 bash
