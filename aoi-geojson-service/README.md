@@ -32,17 +32,16 @@ Interactive API documentation available at /swagger-ui.html.
 - Spring Security
 
 # Prerequisites
--JDK 17 or later
--Maven
--Docker & Docker Compose
+- JDK 17 or later
+- Maven
+- Docker & Docker Compose
 
 # Project Setup
 1. Clone the Repository
-Block:
-bash
-Copy code
+```
 git clone <repository-url>
 cd <project-directory>
+```
 
 2. Keycloak Setup
 Keycloak is used to secure the API. A Keycloak instance is set up using Docker Compose.
@@ -50,7 +49,6 @@ Keycloak is used to secure the API. A Keycloak instance is set up using Docker C
 2.1. Add docker-compose.yml
 Create a docker-compose.yml file in the project root:
 
-Block:
 ```
 version: '3.8'
 
@@ -68,7 +66,7 @@ services:
 ```
 docker-compose up -d
 ```
-Keycloak will now be running on http://localhost:8181.
+*Keycloak will now be running on http://localhost:8181*
 
 2.3. Configure Keycloak
 Login to Keycloak Admin Console:
@@ -83,7 +81,7 @@ In the Keycloak Admin Console, click on the dropdown in the top-left corner and 
 Add name : ** Geocento ** and click "Create".
 
 **Create a Client: aoi-ui**
-
+```
 In the left-hand menu, click on "Clients".
 Click "Create".
 Enter the client ID : **aoi-ui**
@@ -106,7 +104,7 @@ Obtain Client Credentials
 Go back to the "Clients" section and select your client.
 Go to the "Credentials" tab.
 Note the **Client Secret** value.
-
+```
 
 3. Build and Run the Spring Boot Application
 3.1 Update the **Client Secret** in index.html ( const CLIENT_SECRET = "<YOUR SECRET>"; and application.properties (spring.security.oauth2.client.registration.keycloak.client-secret=<YOUR SECRET) files
@@ -114,7 +112,6 @@ Note the **Client Secret** value.
 3.2. Build the Project
 Use Maven to build the project. This will compile the source code, run tests, and package the application.
 
-Block:
 ```
 mvn clean install
 ```
@@ -136,12 +133,10 @@ Replace <application-name> with the name of your generated JAR file (e.g., geojs
 URL: http://localhost:8080/swagger-ui.html
 
 4.2. Map-based UI
-4.2.1.Access : http://localhost:8080/
+4.2.1. Access : http://localhost:8080/
 4.2.2. Enter the username and password created in keycloak
 4.2.3. An login successful alert will be shown
 4.2.4. Enter the sample AOI as follows
-BLOCK:
-
 ```
 {
   "type": "FeatureCollection",
