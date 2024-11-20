@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Viewer with OAuth</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <div class="container py-4">
+        <!-- Page Header -->
+        <header class="text-center mb-4">
+            <h1 class="display-5">Map Viewer with OAuth</h1>
+            <p class="text-muted">Authenticate, submit AoI, and view footprints on the map.</p>
+        </header>
+		<!-- AoI Section -->
+        <div id="aoi-container" class="card mx-auto mb-4 col-md-4 col-sm-6 shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title">Provide Area of Interest (AoI)</h3>
+                <div class="mb-3">
+                    <textarea id="aoi-input" class="form-control" rows="5" placeholder="Paste GeoJSON format AoI here"></textarea>
+                </div>
+                <button id="submit-aoi-btn" class="btn btn-success w-100">Submit AoI</button>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div id="map" class="rounded"></div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:inline="javascript">
+        var accessToken = /*[[${accessToken}]]*/ 'default-token';
+    </script>
+    <script>
+        const API_URL = "http://localhost:8080/api/get-footprints";
+
+        // let accessToken = null;
+
+        var map = L.map('map', {
+            center: [51.505, -0.09],
+            zoom: 13
+        });
+
+	     // Add a tile layer
+	     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		    maxZoom: 19,
+		    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		}).addTo(map);
+	
+	    
+
+        // Handle AoI Submission
+        document.getElementById('submit-aoi-btn').addEventListener('click', async () => {
+            // if (!accessToken) {
+            //     alert('You must log in before submitting an AoI.');
+            //     return;
+            // }
+
+            const aoiInput = document.getElementById('aoi-input').value.trim();
+
+            try {
+                const aoiGeoJSON = JSON.parse(aoiInput);
+
+                // Call API to fetch footprints
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + accessToken
+                    },
+                    body: JSON.stringify({ aoi: aoiGeoJSON })
+                });
+
+                if (response.ok) {
+                	window.dispatchEvent(new Event("resize"));
+                    const footprintsGeoJSON = await response.json();
+                    map.fitBounds(L.geoJSON(footprintsGeoJSON).getBounds());
+                    L.geoJSON(footprintsGeoJSON, {
+                        onEachFeature: (feature, layer) => {
+                            if (feature.properties && feature.properties.name) {
+                                layer.bindPopup(
+                                    `<b>${feature.properties.name}</b><br>${feature.properties.description}`
+                                );
+                            }
+                        },
+                        style: { color: 'blue', weight: 2 }
+                    }).addTo(map);    
+
+                    window.dispatchEvent(new Event("resize"));
+                    map.invalidateSize(); // Ensure the map container size is correct
+                    setTimeout(() => {
+                    	 map.fitBounds(L.geoJSON(footprintsGeoJSON).getBounds());
+                    	}, 100);
+                    window.dispatchEvent(new Event("resize"));
+                    document.getElementById('map').style.display = 'block';
+                } else {
+                    alert('Failed to fetch footprints. Please check the API.');
+                }
+            } catch (error) {
+                console.error('Error processing AoI:', error);
+                alert('Invalid AoI format or API error.');
+            }
+        });
+    </script>
+</body>
+</html>
