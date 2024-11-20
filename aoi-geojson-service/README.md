@@ -109,7 +109,7 @@ Note the **Client Secret** value.
 
 3.0. Build and Run the Spring Boot Application
    
-3.1. Update the **Client Secret** in index.html ( const CLIENT_SECRET = "<YOUR SECRET>"; and application.properties (spring.security.oauth2.client.registration.keycloak.client-secret=<YOUR SECRET) files
+3.1. Update the **application.properties** (spring.security.oauth2.client.registration.keycloak.client-secret=<YOUR SECRET) files
 
 3.2. Build the Project
 Use Maven to build the project. This will compile the source code, run tests, and package the application.
@@ -136,8 +136,8 @@ URL: http://localhost:8080/swagger-ui.html
 
 4.2. Map-based UI
 4.2.1. Access : http://localhost:8080/
-4.2.2. Enter the username and password created in keycloak
-4.2.3. An login successful alert will be shown
+4.2.2. You will be redirected to the Geojson login window
+4.2.3. Once login is successful you would be redirected to the application screen
 4.2.4. Enter the sample AOI as follows
 ```
 {
@@ -197,4 +197,3 @@ Payload Example:
   ]
 }
 ```
-
