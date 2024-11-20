@@ -10,7 +10,7 @@ Includes Swagger documentation for API exploration.
 
 ## Map-based Client using Leaflet.js:
 - Displays the AoI and generated footprints on an interactive map using Leaflet.js.
-- Has a login page where you enter the username and password configured in keyCloak
+- Redirects to keycloak login page where you enter the username and password configured in keyCloak
 - Can be accessed using the base url : http://<host:port>/ ( eg: http://localhost:8080/ if tomcat is on 8080)
 
 ## Security:
